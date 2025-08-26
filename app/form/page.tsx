@@ -10,7 +10,6 @@ export default async function FormPage() {
     redirect('/login')
   }
 
-  // Verificar se o email foi confirmado
   const { data: { user } } = await supabase.auth.getUser()
   
   if (!user?.email_confirmed_at) {
@@ -48,7 +47,6 @@ export default async function FormPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header com logout */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div>
@@ -59,12 +57,10 @@ export default async function FormPage() {
         </div>
       </header>
 
-      {/* Conteúdo do formulário */}
       <main className="container mx-auto p-6">
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-semibold mb-4">Avaliação do Candidato</h2>
           <p>Seu email foi confirmado com sucesso!</p>
-          {/* Adicione aqui o formulário de avaliação */}
           <div className="mt-6 p-4 border border-dashed border-gray-300 rounded">
             <p className="text-gray-600 text-center">
               Formulário de avaliação será implementado aqui

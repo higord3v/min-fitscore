@@ -37,7 +37,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user ?? null)
         setLoading(false)
         
-        // Redirect based on auth state changes
         if (event === 'SIGNED_IN') {
           router.refresh()
         } else if (event === 'SIGNED_OUT') {

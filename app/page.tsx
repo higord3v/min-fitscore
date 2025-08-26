@@ -9,11 +9,9 @@ export default async function HomePage() {
     redirect('/login')
   }
 
-  // Verificar se o email foi confirmado
   const { data: { user } } = await supabase.auth.getUser()
   
   if (!user?.email_confirmed_at) {
-    // Se email não confirmado, vai para página de aviso
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="max-w-md w-full p-8 bg-white rounded-lg shadow">
@@ -26,7 +24,6 @@ export default async function HomePage() {
     )
   }
 
-  // Verificar se é admin
   try {
     const { data: profile } = await supabase
       .from('user_profiles')
@@ -35,13 +32,11 @@ export default async function HomePage() {
       .single()
 
     const userRole = profile?.role || 'user'
-    if (userRole === 'admin') {
-      redirect('/dashboard')
-    } else {
-      console.log(userRole)
+    if (userRole === 'admin') return redirect('/dashboard')
+      
       redirect('/form')
-    }
-  } catch (error) {
+    } catch (error) {
+    console.log(error)
     redirect('/form')
   }
 }

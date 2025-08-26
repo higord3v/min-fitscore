@@ -16,14 +16,12 @@ export const createServer = async () => {
           try {
             cookieStore.set({ name, value, ...options })
           } catch (error) {
-            // Ignore errors in middleware
           }
         },
         remove(name: string, options: any) {
           try {
             cookieStore.set({ name, value: '', ...options })
           } catch (error) {
-            // Ignore errors in middleware
           }
         },
       },

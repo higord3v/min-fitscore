@@ -32,12 +32,11 @@ export default function LoginPage() {
       }
 
       if (data) {
-        router.refresh()
-        if (data.user.email === "admin@pslegal.com") {
-          router.push('/dashboard')
-          return
+        if (data.user.role === 'admin') {
+          return router.push('/dashboard')
         }
-
+        
+        
         router.push('/form')
       }
 
@@ -86,7 +85,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8 p-20 bg-white rounded-lg shadow">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            PSL LEGAL - {isSignUp ? 'Cadastro' : 'Login'}
+            {isSignUp ? 'Cadastro' : 'Login'}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             {isSignUp ? 'Crie sua conta para avaliar candidatos' : 'Acesse o sistema de avaliação FitScore'}

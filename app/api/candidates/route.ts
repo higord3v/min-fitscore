@@ -5,14 +5,12 @@ export async function GET() {
   try {
     const supabase = await createServer()
     
-    // Verificar autenticação
     const { data: { session } } = await supabase.auth.getSession()
     
     if (!session) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
     }
 
-    // Buscar candidatos
     const { data: candidates, error } = await supabase
       .from('candidates')
       .select('*')
