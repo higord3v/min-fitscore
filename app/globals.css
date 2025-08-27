@@ -13,3 +13,12 @@ button {
 .fit-score-good { color: #3b82f6; }
 .fit-score-questionable { color: #f59e0b; }
 .fit-score-poor { color: #ef4444; }
+
+@media (max-width: 768px) {
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

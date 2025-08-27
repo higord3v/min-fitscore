@@ -24,19 +24,15 @@ export default async function HomePage() {
     )
   }
 
-  try {
     const { data: profile } = await supabase
       .from('user_profiles')
       .select('role')
-      .eq('id', session.user.id)
+      .eq('id', user.id)
       .single()
 
     const userRole = profile?.role || 'user'
-    if (userRole === 'admin') return redirect('/dashboard')
-      
-      redirect('/form')
-    } catch (error) {
-    console.log(error)
-    redirect('/form')
-  }
+    if (userRole === 'admin') {
+      return redirect('/dashboard')
+    }
+      return redirect('/form')
 }

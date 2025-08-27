@@ -32,12 +32,7 @@ export default function LoginPage() {
       }
 
       if (data) {
-        if (data.user.role === 'admin') {
-          return router.push('/dashboard')
-        }
-        
-        
-        router.push('/form')
+        router.push("/")
       }
 
     } catch (err) {
