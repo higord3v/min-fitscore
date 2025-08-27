@@ -1,3 +1,5 @@
+// app/login/page.tsx
+
 'use client'
 
 import { useState } from 'react'
@@ -61,10 +63,11 @@ export default function LoginPage() {
       if (authError) throw authError
   
       if (authData.user) {
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        // Obter a sessão atual para ter o token de acesso
         const { data: { session } } = await supabase.auth.getSession()
         
         if (session) {
+          // Usar o token de acesso para fazer a requisição
           const { error: profileError } = await supabase
             .from('user_profiles')
             .upsert({
@@ -78,6 +81,7 @@ export default function LoginPage() {
             if (profileError) {
             console.log(isAdmin)
             console.error('Erro ao criar perfil:', profileError)
+            // Tentar novamente após delay
             setTimeout(async () => {
               await supabase
                 .from('user_profiles')
@@ -212,7 +216,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 setIsSignUp(!isSignUp)
-                setIsAdmin(false)
+                setIsAdmin(false) // Reset do checkbox ao alternar
               }}
               className="text-sm text-blue-600 hover:text-blue-500"
             >
