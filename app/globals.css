@@ -7,3 +7,9 @@
 button {
   cursor: pointer;
 }
+
+/* Adicionar ao globals.css */
+.fit-score-excellent { color: #10b981; }
+.fit-score-good { color: #3b82f6; }
+.fit-score-questionable { color: #f59e0b; }
+.fit-score-poor { color: #ef4444; }
