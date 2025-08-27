@@ -38,7 +38,6 @@ export default function FormPage() {
   }, [supabase.auth])
 
   const questions = [
-    // Performance (1-4)
     {
       id: 'p1',
       category: 'performance' as const,
@@ -63,8 +62,6 @@ export default function FormPage() {
       text: 'Qualidade do trabalho: Atenção a detalhes e excelência?',
       options: ['Pobre', 'Regular', 'Boa', 'Muito boa', 'Excelente']
     },
-    
-    // Energia (5-7)
     {
       id: 'e1',
       category: 'energy' as const,
@@ -83,8 +80,6 @@ export default function FormPage() {
       text: 'Adaptação a prazos: Capacidade de se ajustar a cronogramas?',
       options: ['Inflexível', 'Pouco flexível', 'Neutro', 'Flexível', 'Muito flexível']
     },
-    
-    // Cultura (8-10)
     {
       id: 'c1',
       category: 'culture' as const,
@@ -129,13 +124,11 @@ export default function FormPage() {
       culture: 0
     }
 
-    // Calcular médias por categoria
     answers.forEach(answer => {
       categoryScores[answer.category] += answer.value
       categoryCounts[answer.category] += 1
     })
 
-    // Calcular score final
     let totalScore = 0
     Object.keys(categoryScores).forEach(category => {
       const cat = category as keyof typeof categoryScores
@@ -145,9 +138,8 @@ export default function FormPage() {
       }
     })
 
-    const finalScore = Math.round(totalScore * 20) // Converter para escala 0-100
+    const finalScore = Math.round(totalScore * 20)
 
-    // Determinar classificação
     let classification = ''
     if (finalScore >= 80) classification = 'Fit Altíssimo'
     else if (finalScore >= 60) classification = 'Fit Aprovado'
@@ -201,7 +193,6 @@ export default function FormPage() {
         throw new Error('Usuário não autenticado')
       }
 
-      // Salvar candidato no banco
       const { data: candidate, error: insertError } = await supabase
         .from('candidates')
         .insert({
@@ -216,7 +207,6 @@ export default function FormPage() {
 
       if (insertError) throw insertError
 
-      // Tentar enviar email
       const emailSent = await sendResultEmail(
         candidateData.email, 
         candidateData.name, 
@@ -230,7 +220,6 @@ export default function FormPage() {
         setSuccess('Avaliação salva, mas houve um problema ao enviar o email. O resultado foi registrado no sistema.')
       }
       
-      // Redirecionar após 3 segundos
       setTimeout(() => {
         router.refresh()
       }, 3000)
@@ -412,7 +401,7 @@ export default function FormPage() {
               <button
                 onClick={() => {
                   if (currentStep === 10) {
-                    setCurrentStep(11) // Ir para formulário de dados do candidato
+                    setCurrentStep(11)
                   } else {
                     setCurrentStep(prev => prev + 1)
                   }

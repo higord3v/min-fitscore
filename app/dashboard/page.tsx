@@ -52,7 +52,6 @@ export default function DashboardPage() {
         }
 
         console.log('🔄 Buscando perfil do usuário...')
-        // Buscar perfil do usuário na tabela user_profiles
         const { data: profile, error: profileError } = await supabase
           .from('user_profiles')
           .select('role')
@@ -63,7 +62,6 @@ export default function DashboardPage() {
           console.error('❌ Erro ao buscar perfil:', profileError)
           console.log('🔄 Tentando verificar se é admin por email...')
           
-          // Fallback: verificar por email específico
           const isAdminByEmail = userData.email === 'admin@pslegal.com'
           if (isAdminByEmail) {
             console.log('✅ Admin detectado por email')
@@ -78,7 +76,6 @@ export default function DashboardPage() {
 
         console.log('✅ Perfil encontrado:', profile)
         setUserProfile(profile)
-        // Verificar se é admin - usando a role da tabela user_profiles
         if (!profile || profile.role !== 'admin') {
           console.log('❌ Usuário não é admin, redirecionando para /form')
           router.push('/form')
@@ -119,7 +116,6 @@ export default function DashboardPage() {
       console.error('❌ Erro ao buscar candidatos:', err)
       setError(err.message || 'Erro ao carregar candidatos')
       
-      // Se for erro 401, redirecionar para login
       if (err.message?.includes('401') || err.code === 'PGRST301') {
         console.log('🔄 Token expirado, redirecionando para login...')
         router.push('/login')
@@ -174,7 +170,6 @@ export default function DashboardPage() {
     })
   }
 
-  // Loading enquanto verifica autenticação
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -184,7 +179,6 @@ export default function DashboardPage() {
     )
   }
 
-  // Se não for admin, não renderiza nada (já será redirecionado)
   if (!userProfile || userProfile.role !== 'admin') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -210,7 +204,6 @@ export default function DashboardPage() {
       </header>
 
       <main className="container mx-auto p-6">
-        {/* Filtros */}
         <div className="bg-white p-6 rounded-lg shadow mb-6">
           <h2 className="text-xl font-semibold mb-4">Filtros</h2>
           <div className="flex flex-wrap gap-2">
@@ -267,7 +260,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Estatísticas */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="text-2xl font-bold text-gray-900">{candidates.length}</div>
@@ -293,7 +285,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Lista de Candidatos */}
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold">Candidatos Avaliados</h2>

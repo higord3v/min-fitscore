@@ -50,7 +50,6 @@ export async function POST(request: NextRequest) {
               .classification { font-size: 1.2em; text-align: center; margin-bottom: 20px; padding: 10px; border-radius: 6px; }
               .footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 0.9em; text-align: center; }
               
-              /* Cores baseadas na classificação */
               .fit-altissimo { background: #d1fae5; color: #065f46; }
               .fit-aprovado { background: #dbeafe; color: #1e40af; }
               .fit-questionavel { background: #fef3c7; color: #92400e; }
