@@ -61,6 +61,7 @@ export default function LoginPage() {
       if (authError) throw authError
   
       if (authData.user) {
+        await new Promise(resolve => setTimeout(resolve, 3000));
         const { data: { session } } = await supabase.auth.getSession()
         
         if (session) {
