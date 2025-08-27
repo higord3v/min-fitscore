@@ -78,6 +78,6 @@ Para manter os gestores atualizados, foi criado um workflow no n8n que envia rel
 - **Processo**:
   1. **Buscar Candidatos**: O workflow se conecta ao banco de dados Supabase e busca por candidatos que foram avaliados nas últimas 12 horas e obtiveram a classificação de "Fit Aprovado" ou "Fit Altíssimo".
   2. **Gerar Relatório**: Com os dados coletados, é gerado um relatório resumido contendo o nome, e-mail, Fit Score e classificação de cada candidato aprovado.
-  3. **Enviar E-mail**: O relatório é enviado por e-mail para todos os usuários com a função de "admin".
+  3. **Enviar E-mail**: O relatório é enviado por e-mail para todos os usuários com a função de "admin" (Se não achar, verificar SPAM).
 
 Este processo garante que os gestores recebam informações atualizadas sobre os candidatos mais promissores de forma automática.
