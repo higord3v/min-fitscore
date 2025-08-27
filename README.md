@@ -2,6 +2,58 @@
 
 O Mini FitScore é uma ferramenta de avaliação de candidatos que calcula um "Fit Score" com base em respostas a um formulário. Ele ajuda a agilizar o processo de triagem, fornecendo uma pontuação de compatibilidade do candidato com a cultura e os requisitos da empresa.
 
+## File Tree
+
+```
+├── 📁 .git/ 🚫 (auto-hidden)
+├── 📁 .next/ 🚫 (auto-hidden)
+├── 📁 app/
+│   ├── 📁 api/
+│   │   ├── 📁 auth/
+│   │   │   └── 📁 resend-confirmation/
+│   │   │       └── 📄 route.ts
+│   │   ├── 📁 candidates/
+│   │   │   └── 📄 route.ts
+│   │   └── 📁 send-email/
+│   │       └── 📄 route.ts
+│   ├── 📁 dashboard/
+│   │   └── 📄 page.tsx
+│   ├── 📁 form/
+│   │   └── 📄 page.tsx
+│   ├── 📁 login/
+│   │   └── 📄 page.tsx
+│   ├── 🎨 globals.css
+│   ├── 📄 layout.tsx
+│   └── 📄 page.tsx
+├── 📁 components/
+│   ├── 📁 Auth/
+│   │   └── 📄 ProtectedRoute.tsx
+│   ├── 📄 Header.tsx
+│   └── 📄 LogoutButton.tsx
+├── 📁 contexts/
+│   └── 📄 AuthContext.tsx
+├── 📁 docs/
+├── 📁 lib/
+│   └── 📁 supabase/
+│       ├── 📄 client.ts
+│       ├── 📄 middleware.ts
+│       └── 📄 server.ts
+├── 📁 node_modules/ 🚫 (auto-hidden)
+├── 📁 public/
+├── 📄 .env.example
+├── 📄 .env.local 🚫 (auto-hidden)
+├── 🚫 .gitignore
+├── 📖 README.md
+├── 📄 eslint.config.mjs
+├── 📄 next-env.d.ts 🚫 (auto-hidden)
+├── 📄 next.config.ts
+├── 📄 package-lock.json
+├── 📄 package.json
+├── 📄 postcss.config.mjs
+└── 📄 tsconfig.json
+```
+
+
 ## Funcionalidades
 
 - **Autenticação de Usuários**: Sistema de login e cadastro com confirmação por e-mail.
@@ -12,6 +64,26 @@ O Mini FitScore é uma ferramenta de avaliação de candidatos que calcula um "F
 - **Cálculo de Fit Score**: Gera uma pontuação de 0 a 100 e uma classificação para cada candidato.
 - **Notificações por E-mail**: Envia o resultado da avaliação para o e-mail do candidato.
 - **Dashboard de Admin**: Painel para visualização e gerenciamento dos resultados.
+
+## Tecnologias Utilizadas
+
+- **Next.js**: Framework React para desenvolvimento de aplicações web full-stack.
+- **React**: Biblioteca para construção de interfaces de usuário.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
+- **Supabase**: Plataforma open-source que oferece banco de dados PostgreSQL, autenticação, e APIs auto-geradas.
+- **Tailwind CSS**: Framework de CSS utility-first para estilização rápida e customizável.
+- **Resend**: Serviço para envio de e-mails transacionais.
+- **n8n**: Ferramenta de automação de workflows para tarefas agendadas e processos de back-end.
+
+## O que foi aprendido
+
+- **Desenvolvimento Full-Stack com Next.js**: Utilização do App Router para criar uma aplicação completa, com front-end e back-end integrados.
+- **Integração com Supabase**: Implementação de autenticação (login, cadastro, confirmação de e-mail) e operações de banco de dados (CRUD) de forma segura.
+- **Gerenciamento de Rotas e Acesso**: Criação de rotas protegidas e diferenciação de acesso com base em perfis de usuário (admin vs. user).
+- **Envio de E-mails Transacionais**: Integração com o Resend para notificar os candidatos sobre os resultados da avaliação.
+- **Criação de Formulários Multi-Etapas**: Desenvolvimento de um formulário complexo com estado gerenciado em React.
+- **Estilização com Tailwind CSS**: Aplicação de um design moderno e responsivo de forma eficiente.
+- **Automação de Processos**: Concepção de um workflow no n8n para automatizar o envio de relatórios, otimizando a comunicação com os gestores.
 
 ## Design da API
 
@@ -78,6 +150,6 @@ Para manter os gestores atualizados, foi criado um workflow no n8n que envia rel
 - **Processo**:
   1. **Buscar Candidatos**: O workflow se conecta ao banco de dados Supabase e busca por candidatos que foram avaliados nas últimas 12 horas e obtiveram a classificação de "Fit Aprovado" ou "Fit Altíssimo".
   2. **Gerar Relatório**: Com os dados coletados, é gerado um relatório resumido contendo o nome, e-mail, Fit Score e classificação de cada candidato aprovado.
-  3. **Enviar E-mail**: O relatório é enviado por e-mail para todos os usuários com a função de "admin" (Se não achar, verificar SPAM).
+  3. **Enviar E-mail**: O relatório é enviado por e-mail para todos os usuários com a função de "admin".
 
 Este processo garante que os gestores recebam informações atualizadas sobre os candidatos mais promissores de forma automática.
