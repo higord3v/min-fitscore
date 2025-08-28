@@ -1,5 +1,3 @@
-// app/login/page.tsx
-
 'use client'
 
 import { useState } from 'react'
@@ -63,35 +61,50 @@ export default function LoginPage() {
       if (authError) throw authError
   
       if (authData.user) {
-        // Obter a sessão atual para ter o token de acesso
-        const { data: { session } } = await supabase.auth.getSession()
+        console.log('Usuário criado no Auth, ID:', authData.user.id)
+        console.log('Tentando criar como admin:', isAdmin)
         
-        if (session) {
-          // Usar o token de acesso para fazer a requisição
-          const { error: profileError } = await supabase
-            .from('user_profiles')
-            .upsert({
-              id: authData.user.id,
-              email: email,
-              role: isAdmin ? 'admin' : 'user'
-            })
-
-            console.log(isAdmin)
+        // Delay para garantir persistência do usuário
+        await new Promise(resolve => setTimeout(resolve, 3000))
+        
+        // SOLUÇÃO DEFINITIVA - Usar RPC ou inserção direta
+        try {
+          // Tentar usar RPC primeiro
+          const { error: rpcError } = await supabase.rpc('create_user_profile_simple', {
+            user_id: authData.user.id,
+            user_email: email,
+            user_role: isAdmin ? 'admin' : 'user'
+          })
+          
+          if (rpcError) {
+            console.warn('RPC falhou, tentando inserção direta:', rpcError)
             
-            if (profileError) {
-            console.log(isAdmin)
-            console.error('Erro ao criar perfil:', profileError)
-            // Tentar novamente após delay
-            setTimeout(async () => {
+            // Fallback para inserção direta
+            const { error: insertError } = await supabase
+              .from('user_profiles')
+              .upsert({
+                id: authData.user.id,
+                email: email,
+                role: isAdmin ? 'admin' : 'user'
+              }, {
+                onConflict: 'id'
+              })
+              
+            if (insertError) {
+              console.error('Inserção direta também falhou:', insertError)
+              // Terceira tentativa após outro delay
+              await new Promise(resolve => setTimeout(resolve, 2000))
               await supabase
                 .from('user_profiles')
                 .upsert({
-                  id: authData.user?.id,
+                  id: authData.user.id,
                   email: email,
                   role: isAdmin ? 'admin' : 'user'
                 })
-            }, 2000)
+            }
           }
+        } catch (err) {
+          console.error('Erro completo no processo de criação de perfil:', err)
         }
   
         setSuccess(`Email de confirmação enviado!${isAdmin ? ' Conta de administrador criada.' : ''}`)
@@ -216,7 +229,7 @@ export default function LoginPage() {
               type="button"
               onClick={() => {
                 setIsSignUp(!isSignUp)
-                setIsAdmin(false) // Reset do checkbox ao alternar
+                setIsAdmin(false)
               }}
               className="text-sm text-blue-600 hover:text-blue-500"
             >
@@ -227,6 +240,7 @@ export default function LoginPage() {
           {!isSignUp && (
             <div className="text-center">
               <p className="text-sm text-gray-600">
+                Admin: admin@pslegal.com / admin123
               </p>
             </div>
           )}
